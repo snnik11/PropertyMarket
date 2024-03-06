@@ -64,3 +64,4 @@ C:\Nikita\Github_Projects\PropertyMarket\api_market\obj\Debug\net8.0\refint\api_
 C:\Nikita\Github_Projects\PropertyMarket\api_market\obj\Debug\net8.0\api_market.pdb
 C:\Nikita\Github_Projects\PropertyMarket\api_market\obj\Debug\net8.0\api_market.genruntimeconfig.cache
 C:\Nikita\Github_Projects\PropertyMarket\api_market\obj\Debug\net8.0\ref\api_market.dll
+C:\Nikita\Github_Projects\PropertyMarket\api_market\obj\Debug\net8.0\api_market.sourcelink.json
