@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import ApiStatus from "../apiStatus";
 import { currencyFormatter } from "../config";
 import useFetchHouses from "../hooks/HouseHooks";
@@ -8,6 +9,9 @@ const HouseList = () => {
     //const houses = useFetchHouses();   
     const { data, status , isSuccess} = useFetchHouses(); //data is variable here coming from HouseHooks.ts
    
+    //useNavigate is a hook
+    const nav = useNavigate();
+    
     if (!isSuccess)
         return (<ApiStatus status = {status}/>
         )
@@ -33,7 +37,7 @@ const HouseList = () => {
                 {/* houses earlier instead of data */}
                     {data && data.map((h) => (
                         //key used here to keep track fo each rendered item
-                        <tr key = {h.id}>
+                        <tr key = {h.id} onClick={() => nav(`/house/${h.id}`)}>
                             <td>{h.address}</td>
                             <td>{h.country}</td>
                             <td>{currencyFormatter.format(h.price)}</td>

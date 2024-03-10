@@ -47,7 +47,7 @@ var summaries = new[]
 // dbContext.Houses.Select(h => new HouseDto(h.Id,h.Address,h.Country, h.Price)));
 
 app.MapGet("/houses", (IHouseRepository repo) => repo.GetAll()); //creates endpoint which GET request can call directly
-app.MapGet("/houses/{houseId:int}", async(int houseId, IHouseRepository repo) => 
+app.MapGet("/house/{houseId:int}", async(int houseId, IHouseRepository repo) => 
 {
     var house = await repo.Get(houseId);
     if (house  ==null)
