@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args); //creates and configures web apps
@@ -57,5 +58,33 @@ app.MapGet("/house/{houseId:int}", async(int houseId, IHouseRepository repo) =>
         return Results.Ok(house); //Ok for 200 status code
     
 }).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+
+//Http post is called when new data introduced
+//Dto here will be used to call data from react to api
+app.MapPost("/houses", async ([FromBody]HouseDetailDto dto, IHouseRepository repo) => 
+{
+    var newHouse = repo.Add(dto);
+    return Results.Created($"/house/{newHouse.Id}", newHouse);
+}).Produces<HouseDetailDto>(StatusCodes.Status201Created); //for swagger
+
+//update house
+app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
+{
+    if(await repo.Get(dto.Id) == null)
+    return Results.Problem($"House {dto.id} not found"), statusCode : 404);
+
+    var updatedHouse = await repo.Update(dto);
+    return Results.Ok(updatedHouse);
+
+}).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+ 
+ app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository repo ) =>
+ {
+    if (await repo.Get(houseId) == null)
+    return Results.Problem($"House {houseId} not found", statusCode : 404);
+    await repo.Delete(houseId);
+    return Results.Ok();
+ }).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+
 app.Run();
 
